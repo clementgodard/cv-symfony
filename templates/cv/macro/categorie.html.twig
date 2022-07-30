@@ -1,0 +1,38 @@
+{% macro recursiveCategorie(categorie, depth) %}
+    {% import _self as self %}
+
+    <div id="{{ categorie.libelle | slug | lower }}">
+        <h{{ depth }}>{{ categorie.libelle }}</h{{ depth }}>
+
+        {% if categorie.categorieEnfant | length > 0 %}
+            {% for sousCategorie in categorie.categorieEnfant %}
+                {{ self.recursiveCategorie(sousCategorie, (depth+1)) }}
+            {% endfor %}
+        {% endif %}
+
+        {% if categorie.lignes | length > 0 %}
+            <ul>
+                {% for ligne in categorie.lignes %}
+                    <li>
+                        {{ ligne.titre }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro recursiveCategorieNav(categorie, depth) %}
+    {% import _self as self %}
+
+    <li>
+        <a href="#{{ categorie.libelle | slug | lower }}">{{ categorie.libelle }}</a>
+        {% if categorie.categorieEnfant | length > 0 %}
+            <ul>
+                {% for sousCategorie in categorie.categorieEnfant %}
+                    {{ self.recursiveCategorieNav(sousCategorie, (depth+1)) }}
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </li>
+{% endmacro %}
