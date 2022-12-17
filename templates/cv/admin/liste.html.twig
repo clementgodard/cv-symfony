@@ -1,0 +1,21 @@
+{% extends 'cv/admin/base.html.twig' %}
+
+{% block title %}Liste des catégories{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('liste') }}
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+
+    {% from 'cv/macro/categorie.html.twig' import recursiveCategorieAdmin %}
+
+    <div class="container">
+        {% for categorie in categories %}
+            {{ recursiveCategorieAdmin(categorie, 1) }}
+        {% endfor %}
+    </div>
+{% endblock %}
+

@@ -10,53 +10,75 @@ use Doctrine\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
 {
-    const DATA = [
+    const DATAS = [
         [
             'libelle' => 'Compétences',
             'position' => 0,
             'actif' => true,
             'enfants' => [
                 [
-                    'libelle' => 'Language',
+                    'libelle' => 'Langages',
                     'position' => 0,
                     'actif' => true,
                     'enfants' => [
                         [
-                            'libelle' => 'Back end',
+                            'libelle' => 'Back-end',
                             'position' => 0,
                             'actif' => true,
                             'lignes' => [
                                 [
                                     'titre' => 'PHP',
-                                    'contenu' => 'Je pratique ce language depuis maintenant 3ans',
+                                    'contenu' => 'Je pratique ce langage depuis maintenant 3ans',
                                     'position' => 0,
+                                    'note' => 85,
                                     'actif' => true
                                 ], [
-                                    'titre' => 'NodeJS',
-                                    'contenu' => 'Ne me prenez surtout pas pour ce language',
+                                    'titre' => 'SQL',
+                                    'contenu' => 'L\'incontournable',
                                     'position' => 1,
+                                    'note' => 80,
                                     'actif' => true
                                 ]
                             ]
                         ], [
-                            'libelle' => 'Front end',
+                            'libelle' => 'Front-end',
                             'position' => 1,
                             'actif' => true,
                             'lignes' => [
                                 [
-                                    'titre' => 'CSS',
-                                    'contenu' => 'Je ne suis pas designer mais je connais bien les possibilités de ce language et ses enjeux pour un site web',
-                                    'position' => 1,
+                                    'titre' => 'CSS / SCSS',
+                                    'contenu' => 'Je ne suis pas designer mais je connais bien les possibilités de ce langage et ses enjeux pour un site web',
+                                    'position' => 0,
+                                    'note' => 70,
                                     'actif' => true
                                 ], [
-                                    'titre' => 'Javascript',
-                                    'contenu' => 'Bien qu\'ayant envie de me perfectionner sur les nouveautés ES6+, j\'arrives toujours à mes fins avec ce language',
-                                    'position' => 0,
+                                    'titre' => 'Javascript / Typescript',
+                                    'contenu' => 'Bien qu\'ayant envie de me perfectionner sur les nouveautés ES6+, j\'arrives toujours à mes fins avec ce langage',
+                                    'position' => 75,
                                     'actif' => true
                                 ], [
                                     'titre' => 'HTML',
                                     'contenu' => '<strong>SEO friendly</strong>',
+                                    'position' => 90,
+                                    'actif' => true
+                                ]
+                            ]
+                        ], [
+                            'libelle' => 'Autres',
+                            'position' => 2,
+                            'actif' => true,
+                            'lignes' => [
+                                [
+                                    'titre' => 'Script bash',
+                                    'contenu' => 'Loin d\'être expert en bash mais je peux dépanner',
                                     'position' => 0,
+                                    'note' => 50,
+                                    'actif' => true
+                                ], [
+                                    'titre' => 'Git',
+                                    'contenu' => 'Un incontournable du métier',
+                                    'position' => 1,
+                                    'note' => 83,
                                     'actif' => true
                                 ]
                             ]
@@ -67,13 +89,104 @@ class AppFixtures extends Fixture
                     'position' => 1,
                     'actif' => true,
                     'enfants' => [
-
+                        [
+                            'libelle' => 'PHP',
+                            'position' => 0,
+                            'actif' => true,
+                            'lignes' => [
+                                [
+                                    'titre' => 'Symfony',
+                                    'contenu' => 'Mon environnement de travail préféré',
+                                    'position' => 0,
+                                    'note' => 78,
+                                    'actif' => true
+                                ]
+                            ]
+                        ], [
+                            'libelle' => 'Javascript',
+                            'position' => 1,
+                            'actif' => true,
+                            'lignes' => [
+                                [
+                                    'titre' => 'JQuery',
+                                    'contenu' => 'Bien obligé de le connaitre mais je l\'évite de plus en plus',
+                                    'position' => 0,
+                                    'note' => 45,
+                                    'actif' => true
+                                ], [
+                                    'titre' => 'Angular',
+                                    'contenu' => 'Utiliser pendant mes études j\'ai encore quelques restes',
+                                    'position' => 1,
+                                    'note' => 55,
+                                    'actif' => true
+                                ], [
+                                    'titre' => 'Bootstrap',
+                                    'contenu' => 'Très bonne librairie bien qu\'un peu volumineuse',
+                                    'position' => 3,
+                                    'note' => 70,
+                                    'actif' => true
+                                ]
+                            ]
+                        ]
+                    ]
+                ], [
+                    'libelle' => 'Linux',
+                    'position' => 2,
+                    'actif' => true,
+                    'lignes' => [
+                        [
+                            'titre' => 'Apache2',
+                            'contenu' => 'Installation, maintenance',
+                            'position' => 0,
+                            'note' => 90,
+                            'actif' => true
+                        ], [
+                            'titre' => 'Mysql',
+                            'contenu' => 'Installation, maintenance',
+                            'position' => 1,
+                            'actif' => true
+                        ], [
+                            'titre' => 'Gestion des DNS',
+                            'contenu' => 'Une fois en possession d\'un nom de domaine bien évidement',
+                            'position' => 2,
+                            'actif' => true
+                        ], [
+                            'titre' => 'Let\'s encrypt',
+                            'contenu' => 'Pouvoir passer en https (bien que la procédure soit très simple)',
+                            'position' => 3,
+                            'actif' => true
+                        ], [
+                            'titre' => 'PHP FPM',
+                            'contenu' => 'Gagner en performances sans dépendre de apache',
+                            'position' => 4,
+                            'actif' => true
+                        ], [
+                            'titre' => 'Mise en place d\'un pare-feu',
+                            'contenu' => 'Avec ufw',
+                            'position' => 5,
+                            'actif' => true
+                        ], [
+                            'titre' => 'Installation d\'un FTP / SFTP',
+                            'contenu' => '',
+                            'position' => 6,
+                            'actif' => true
+                        ], [
+                            'titre' => 'Gitlab / Gitlab-CI',
+                            'contenu' => 'Mise ne place de déploiement automatique',
+                            'position' => 7,
+                            'actif' => true
+                        ], [
+                            'titre' => 'Docker',
+                            'contenu' => 'Jamais utiliser dans le monde du travail',
+                            'position' => 7,
+                            'actif' => true
+                        ]
                     ]
                 ]
             ]
         ], [
-            'libelle' => 'Fomation',
-            'position' => 0,
+            'libelle' => 'Formation',
+            'position' => 1,
             'actif' => true,
             'lignes' => [
                 [
@@ -88,22 +201,45 @@ class AppFixtures extends Fixture
                     'actif' => true
                 ]
             ]
+        ], [
+            'libelle' => 'Expériences',
+            'position' => 2,
+            'actif' => true,
+            'lignes' => [
+                [
+                    'titre' => 'Développeur web à Trésor du Patrimoine',
+                    'contenu' => 'Près de 3ans de loyaux services',
+                    'position' => 0,
+                    'actif' => true
+                ], [
+                    'titre' => 'Intérim à la CPAM de Évreux',
+                    'contenu' => 'Développeur d\'applications internes, principalement avec Symfony',
+                    'position' => 1,
+                    'actif' => true
+                ], [
+                    'titre' => 'Stage à la CPAM de Évreux',
+                    'contenu' => 'Maintenir une application en Java Spring',
+                    'position' => 2,
+                    'actif' => true
+                ]
+            ]
         ]
     ];
 
     public function load(ObjectManager $manager): void
     {
         // Pour chacune des catégories décrites
-        foreach (self::DATA as $c) {
+        foreach (self::DATAS as $data) {
             // On extrait et on sauvegarde l'objet
-            $categorieMere = self::extractCategorie($c);
+            $categorieMere = self::extractCategorie($data);
             $manager->persist($categorieMere);
         }
 
         $manager->flush();
     }
 
-    private function extractCategorie(array $c): Categorie {
+    private function extractCategorie(array $c): Categorie
+    {
         $categorie = new Categorie();
         $categorie
             ->setLibelle($c['libelle'])
@@ -133,11 +269,13 @@ class AppFixtures extends Fixture
         return $categorie;
     }
 
-    private function extractLigne(array $l, Categorie $categorie): Ligne {
+    private function extractLigne(array $l, Categorie $categorie): Ligne
+    {
         $ligne = new Ligne();
         $ligne
             ->setTitre($l['titre'])
             ->setPosition($l['position'])
+            ->setNote($l['note'] ?? null)
             ->setActif($l['actif'])
             ->setCategorie($categorie);
 

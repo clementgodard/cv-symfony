@@ -25,6 +25,9 @@ class Ligne
     #[ORM\ManyToOne(targetEntity: Categorie::class, inversedBy: 'lignes')]
     private ?Categorie $categorie = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $note;
+
     #[ORM\Column]
     private bool $actif = true;
 
@@ -91,6 +94,17 @@ class Ligne
     public function setCategorie(?Categorie $categorie): Ligne
     {
         $this->categorie = $categorie;
+        return $this;
+    }
+
+    public function getNote(): ?int
+    {
+        return $this->note;
+    }
+
+    public function setNote(?int $note): Ligne
+    {
+        $this->note = $note;
         return $this;
     }
 }

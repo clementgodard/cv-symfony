@@ -26,10 +26,10 @@ class Categorie
     #[ORM\ManyToOne(targetEntity: Categorie::class, inversedBy: 'categorieEnfant')]
     private ?Categorie $parent = null;
 
-    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Categorie::class, cascade: ['persist'], orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Categorie::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private ?Collection $categorieEnfant = null;
 
-    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Ligne::class, cascade: ['persist'], orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Ligne::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     #[ORM\OrderBy(['position' => 'ASC'])]
     private ?Collection $lignes = null;
 

@@ -2,6 +2,12 @@
 
 {% block title %}CV Clément Godard{% endblock %}
 
+{% block stylesheets %}
+    {# Pour appeller une feuille de style seulement pour impression #}
+{#    {{ encore_entry_link_tags('cv', null, '_default', {'media': 'print'}) }}#}
+    {{ encore_entry_link_tags('cv') }}
+{% endblock %}
+
 {% block body %}
 
     <div class="container">
@@ -22,14 +28,23 @@
 
         {% block main %}
             <main>
-                <h1>CV de Clément Godard</h1>
+                <h1>Clément Godard</h1>
+                <h2>Développeur Web</h2>
+
+                {# Identité / Contact #}
 
                 {% from 'cv/macro/categorie.html.twig' import recursiveCategorie %}
 
                 {% for categorie in categories %}
-                    {{ recursiveCategorie(categorie, 2) }}
+                    {{ recursiveCategorie(categorie, 1) }}
                 {% endfor %}
             </main>
+        {% endblock %}
+
+        {% block footer %}
+            <footer>
+                <p>Site réalisé par Clément Godard <a href="#">code source</a></p>
+            </footer>
         {% endblock %}
     </div>
 

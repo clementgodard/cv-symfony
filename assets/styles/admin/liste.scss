@@ -1,0 +1,47 @@
+main {
+  ul {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  li {
+    display: inline-block;
+    border: 2px solid black;
+    position: relative;
+    padding: 0.5rem 1rem;
+
+    .ligne-titre {
+      display: block;
+      text-align: center;
+    }
+  }
+
+  div[id] {
+    h3, h4, h5, h6 {
+      margin: 1rem;
+    }
+
+
+    h3 {
+      font-size: 1.75rem;
+    }
+
+    h4 {
+      font-size: 1.5rem;
+    }
+
+    h5 {
+      font-size: 1.25rem;
+    }
+
+    h6 {
+      font-size: 1rem;
+    }
+  }
+}
+
+div[data-depth] {
+  padding-left: 1.5rem;
+}

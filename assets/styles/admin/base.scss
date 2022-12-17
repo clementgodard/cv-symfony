@@ -1,0 +1,18 @@
+@import "../variables";
+
+@import "bootstrap/scss/bootstrap";
+
+.nav-item {
+  &:hover {
+    background-color: lighten(#83bde0, 15%);
+  }
+
+  &.active {
+    background-color: #83bde0;
+
+    .nav-link {
+      text-decoration: underline;
+      font-weight: bold;
+    }
+  }
+}

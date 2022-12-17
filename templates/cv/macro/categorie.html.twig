@@ -1,8 +1,8 @@
 {% macro recursiveCategorie(categorie, depth) %}
     {% import _self as self %}
 
-    <div id="{{ categorie.libelle | slug | lower }}">
-        <h{{ depth }}>{{ categorie.libelle }}</h{{ depth }}>
+    <div id="{{ categorie.libelle | slug | lower }}" data-depth="{{ depth }}">
+        <h{{ (depth + 2) }}>{{ categorie.libelle }}</h{{ (depth + 2) }}>
 
         {% if categorie.categorieEnfant | length > 0 %}
             {% for sousCategorie in categorie.categorieEnfant %}
@@ -14,7 +14,11 @@
             <ul>
                 {% for ligne in categorie.lignes %}
                     <li>
-                        {{ ligne.titre }}
+                        <span class="ligne-titre">{{ ligne.titre }}</span>
+{#                        <p>{{ ligne.contenu | raw }}</p>#}
+                        {% if ligne.note %}
+                        <progress max="100" value="{{ ligne.note }}">{{ ligne.note }}%</progress>
+                        {% endif %}
                     </li>
                 {% endfor %}
             </ul>
@@ -35,4 +39,37 @@
             </ul>
         {% endif %}
     </li>
+{% endmacro %}
+
+{% macro recursiveCategorieAdmin(categorie, depth) %}
+    {% import _self as self %}
+
+    <div data-depth="{{ depth }}">
+        <h{{ (depth + 2) }}>{{ categorie.libelle }}
+            <span class="ms-auto">
+                <a href="{{ path('categorie', {categorie: categorie.id}) }}">Modifier</a>
+                <a href="{{ path('categorieSupp', {categorie: categorie.id}) }}">Supprimer</a>
+            </span>
+        </h{{ (depth + 2) }}>
+
+        {% if categorie.categorieEnfant | length > 0 %}
+            {% for sousCategorie in categorie.categorieEnfant %}
+                {{ self.recursiveCategorieAdmin(sousCategorie, (depth+1)) }}
+            {% endfor %}
+        {% endif %}
+
+        {% if categorie.lignes | length > 0 %}
+            <ul>
+                {% for ligne in categorie.lignes %}
+                    <li>
+                        <span class="ligne-titre">{{ ligne.titre }}</span>
+                        <span class="ms-auto">
+                            <a href="{{ path('ligne', {ligne: ligne.id}) }}">Modifier</a>
+                            <a href="{{ path('ligneSupp', {ligne: ligne.id}) }}">Supprimer</a>
+                        </span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
 {% endmacro %}
