@@ -46,9 +46,9 @@
 
     <div data-depth="{{ depth }}">
         <h{{ (depth + 2) }}>{{ categorie.libelle }}
-            <span class="ms-auto">
-                <a href="{{ path('categorie', {categorie: categorie.id}) }}">Modifier</a>
-                <a href="{{ path('categorieSupp', {categorie: categorie.id}) }}">Supprimer</a>
+            <span class="float-end">
+                <a href="{{ path('categorie', {categorie: categorie.id}) }}"><i class="bi bi-pencil"></i></a>
+                <a class="js-confirm" href="{{ path('categorieSupp', {categorie: categorie.id}) }}"><i class="bi bi-trash"></i></a>
             </span>
         </h{{ (depth + 2) }}>
 
@@ -63,9 +63,9 @@
                 {% for ligne in categorie.lignes %}
                     <li>
                         <span class="ligne-titre">{{ ligne.titre }}</span>
-                        <span class="ms-auto">
-                            <a href="{{ path('ligne', {ligne: ligne.id}) }}">Modifier</a>
-                            <a href="{{ path('ligneSupp', {ligne: ligne.id}) }}">Supprimer</a>
+                        <span>
+                            <a href="{{ path('ligne', {ligne: ligne.id}) }}"><i class="bi bi-pencil"></i></a>
+                            <a class="js-confirm" href="{{ path('ligneSupp', {ligne: ligne.id}) }}"><i class="bi bi-trash"></i></a>
                         </span>
                     </li>
                 {% endfor %}

@@ -7,15 +7,20 @@
     {{ encore_entry_link_tags('liste') }}
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('liste') }}
+{% endblock %}
+
 {% block body %}
     {{ parent() }}
 
     {% from 'cv/macro/categorie.html.twig' import recursiveCategorieAdmin %}
 
-    <div class="container">
+    <main id="liste" class="container">
         {% for categorie in categories %}
             {{ recursiveCategorieAdmin(categorie, 1) }}
         {% endfor %}
-    </div>
+    </main>
 {% endblock %}
 

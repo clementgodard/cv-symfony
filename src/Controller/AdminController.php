@@ -8,7 +8,7 @@ use App\Form\CategorieType;
 use App\Form\LigneType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -85,20 +85,20 @@ class AdminController extends AbstractController
     }
 
     #[Route('/ligneSupp/{ligne<\d+>}', name: 'ligneSupp')]
-    public function ligneSupp(EntityManagerInterface $entityManager, Ligne $ligne): JsonResponse
+    public function ligneSupp(EntityManagerInterface $entityManager, Ligne $ligne): RedirectResponse
     {
         $entityManager->remove($ligne);
         $entityManager->flush();
 
-        return new JsonResponse('ok');
+        return $this->redirectToRoute('liste');
     }
 
     #[Route('/categorieSupp/{categorie<\d+>}', name: 'categorieSupp')]
-    public function categorieSupp(EntityManagerInterface $entityManager, Categorie $categorie): JsonResponse
+    public function categorieSupp(EntityManagerInterface $entityManager, Categorie $categorie): RedirectResponse
     {
         $entityManager->remove($categorie);
         $entityManager->flush();
 
-        return new JsonResponse('ok');
+        return $this->redirectToRoute('liste');
     }
 }

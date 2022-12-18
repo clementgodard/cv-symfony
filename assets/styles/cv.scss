@@ -64,7 +64,6 @@ li {
 main {
     ul {
         margin: 0;
-        //padding-left: 3rem;
         display: flex;
         flex-wrap: wrap;
         gap: 1rem;
@@ -87,7 +86,18 @@ main {
         accent-color: green;
     }
 
-    div[id] {
+    div[data-depth] {
+        padding-left: 1.25rem;
+        border-left: 1px solid black;
+
+        &[data-depth="1"] {
+            border-width: 3px;
+        }
+
+        &[data-depth="2"] {
+            border-width: 2px;
+        }
+
         h3, h4, h5, h6 {
             margin: 1rem;
         }
@@ -95,22 +105,18 @@ main {
 
         h3 {
             font-size: 1.75rem;
-            //margin: 1rem;
         }
 
         h4 {
             font-size: 1.5rem;
-            //margin: 1rem 1rem 1rem 2rem;
         }
 
         h5 {
             font-size: 1.25rem;
-            //margin: 1rem 1rem 1rem 3rem;
         }
 
         h6 {
             font-size: 1rem;
-            //margin: 1rem 1rem 1rem 4rem;
         }
     }
 }
@@ -119,21 +125,4 @@ footer {
     font-size: 0.75rem;
     text-align: center;
     grid-column: span 2;
-}
-
-//div[id] {
-//
-//}
-
-div[data-depth] {
-    padding-left: 1.25rem;
-    border-left: 1px solid black;
-
-    &[data-depth="1"] {
-        border-width: 3px;
-    }
-
-    &[data-depth="2"] {
-        border-width: 2px;
-    }
 }

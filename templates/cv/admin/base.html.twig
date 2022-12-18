@@ -18,19 +18,19 @@
     <nav class="container navbar navbar-expand-lg">
         <ul class="navbar-nav w-100">
             <li class="nav-item{{ (app.request.attributes.get('_route') == 'categorie' ? ' active':'') }}">
-                <a class="nav-link" href="{{ path('categorie') }}">Créer une catégorie</a>
+                <a class="nav-link" href="{{ path('categorie') }}"><i class="bi bi-plus-circle"></i>&nbsp;Créer une catégorie</a>
             </li>
 
             <li class="nav-item{{ (app.request.attributes.get('_route') == 'ligne' ? ' active':'') }}">
-                <a class="nav-link" href="{{ path('ligne') }}">Créer une ligne</a>
+                <a class="nav-link" href="{{ path('ligne') }}"><i class="bi bi-plus-circle"></i>&nbsp;Créer une ligne</a>
             </li>
 
             <li class="nav-item{{ (app.request.attributes.get('_route') == 'liste' ? ' active':'') }}">
-                <a class="nav-link" href="{{ path('liste') }}">Liste des catégories</a>
+                <a class="nav-link" href="{{ path('liste') }}"><i class="bi bi-list-columns-reverse"></i>&nbsp;Liste des catégories</a>
             </li>
 
             <li class="nav-item ms-auto">
-                <a class="nav-link" href="{{ path('cv') }}">Voir le CV</a>
+                <a class="nav-link" href="{{ path('cv') }}" target="_blank"><i class="bi bi-eye"></i>&nbsp;Voir le CV</a>
             </li>
         </ul>
     </nav>
