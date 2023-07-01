@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Categorie;
+use App\Entity\Competence;
 use App\Entity\Ligne;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -70,9 +71,7 @@ class AppFixtures extends Fixture
                             'lignes' => [
                                 [
                                     'titre' => 'Script bash',
-                                    'contenu' => 'Loin d\'être expert en bash mais je peux dépanner',
                                     'position' => 0,
-                                    'note' => 50,
                                     'actif' => true
                                 ], [
                                     'titre' => 'Git',
@@ -162,12 +161,10 @@ class AppFixtures extends Fixture
                             'actif' => true
                         ], [
                             'titre' => 'Mise en place d\'un pare-feu',
-                            'contenu' => 'Avec ufw',
                             'position' => 5,
                             'actif' => true
                         ], [
                             'titre' => 'Installation d\'un FTP / SFTP',
-                            'contenu' => '',
                             'position' => 6,
                             'actif' => true
                         ], [
@@ -178,7 +175,7 @@ class AppFixtures extends Fixture
                         ], [
                             'titre' => 'Docker',
                             'contenu' => 'Jamais utiliser dans le monde du travail',
-                            'position' => 7,
+                            'position' => 8,
                             'actif' => true
                         ]
                     ]
@@ -269,20 +266,41 @@ class AppFixtures extends Fixture
         return $categorie;
     }
 
-    private function extractLigne(array $l, Categorie $categorie): Ligne
+    private function extractLigne(array $l, Categorie $categorie): Ligne|Competence
     {
-        $ligne = new Ligne();
-        $ligne
-            ->setTitre($l['titre'])
-            ->setPosition($l['position'])
-            ->setNote($l['note'] ?? null)
-            ->setActif($l['actif'])
-            ->setCategorie($categorie);
+//        dump($l);
 
-        if (isset($l['contenu'])) {
-            $ligne->setContenu($l['contenu']);
+        dump(!isset($l['note'], $l));
+        dump(!isset($l['contenu'], $l));
+
+        if (!isset($l['note']) && !isset($l['contenu'])) {
+            dump('ligne');
+            $ligne = new Ligne();
+            $ligne
+                ->setTitre($l['titre'])
+                ->setPosition($l['position'])
+                ->setActif($l['actif'])
+                ->setCategorie($categorie);
+
+            return $ligne;
+        } else {
+            dump('compétence');
+            $competence = new Competence();
+            $competence
+                ->setTitre($l['titre'])
+                ->setPosition($l['position'])
+                ->setActif($l['actif'])
+                ->setCategorie($categorie);
+
+            if (isset($l['contenu'])) {
+                $competence->setContenu($l['contenu']);
+            }
+
+            if (isset($l['note'])) {
+                $competence->setNote($l['note']);
+            }
+
+            return $competence;
         }
-
-        return $ligne;
     }
 }

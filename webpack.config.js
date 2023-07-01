@@ -17,11 +17,10 @@ Encore
     /*
      * ENTRY CONFIG
      *
-     * Each entry will result in one JavaScript file (e.g. app.ts)
+     * Each entry will result in one JavaScript file (e.g. cv.ts)
      * and one CSS file (e.g. cv.scss) if your JavaScript imports CSS.
      */
-    // .addEntry('app', './assets/app.ts')
-    .addStyleEntry('cv', './assets/styles/cv.scss')
+    .addEntry('cv', './assets/js/cv.ts')
     .addEntry('adminBase', './assets/js/admin/base.ts')
     .addEntry('liste', './assets/js/admin/liste.ts')
 

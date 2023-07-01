@@ -22,10 +22,10 @@ class CategorieType extends AbstractType
             ->add('libelle', TextType::class, [
                 'label' => 'Libellé'
             ])
-            ->add('position', NumberType::class, [
-                'label' => 'Position',
-                'html5' => true
-            ])
+//            ->add('position', NumberType::class, [
+//                'label' => 'Position',
+//                'html5' => true
+//            ])
             ->add('actif', ChoiceType::class, [
                 'expanded' => true,
                 'choices' => [

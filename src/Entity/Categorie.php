@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Abstract\AbstractLigne;
 use App\Repository\CategorieRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -29,7 +30,7 @@ class Categorie
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Categorie::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private ?Collection $categorieEnfant = null;
 
-    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Ligne::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: AbstractLigne::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     #[ORM\OrderBy(['position' => 'ASC'])]
     private ?Collection $lignes = null;
 
@@ -109,5 +110,18 @@ class Categorie
         }
 
         return $this;
+    }
+
+    public function getFullPathLibelle(string $return = ''): string
+    {
+        if ($this->getParent() === null) {
+            if ($return === '') {
+                return $this->libelle;
+            } else {
+                return $this->libelle . $return;
+            }
+        } else {
+            return $this->getParent()->getFullPathLibelle(' > '. $this->getLibelle() . $return);
+        }
     }
 }

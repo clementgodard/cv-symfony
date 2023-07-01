@@ -15,9 +15,9 @@
                 {% for ligne in categorie.lignes %}
                     <li>
                         <span class="ligne-titre">{{ ligne.titre }}</span>
-{#                        <p>{{ ligne.contenu | raw }}</p>#}
-                        {% if ligne.note %}
-                        <progress max="100" value="{{ ligne.note }}">{{ ligne.note }}%</progress>
+                        {#                        <p>{{ ligne.contenu | raw }}</p> #}
+                        {% if ligne.class == 'Competence' and ligne.note %}
+                            <progress max="100" value="{{ ligne.note }}">{{ ligne.note }}%</progress>
                         {% endif %}
                     </li>
                 {% endfor %}
@@ -47,8 +47,11 @@
     <div data-depth="{{ depth }}">
         <h{{ (depth + 2) }}>{{ categorie.libelle }}
             <span class="float-end">
-                <a href="{{ path('categorie', {categorie: categorie.id}) }}"><i class="bi bi-pencil"></i></a>
-                <a class="js-confirm" href="{{ path('categorieSupp', {categorie: categorie.id}) }}"><i class="bi bi-trash"></i></a>
+                <a href="{{ path('formCategorie', {categorie: categorie.id}) }}"><i class="bi bi-pencil"></i></a>
+                <a class="js-confirm"
+                   href="{{ path('deleteCategorie', {categorie: categorie.id}) }}"
+                   data-method="DELETE"
+                ><i class="bi bi-trash"></i></a>
             </span>
         </h{{ (depth + 2) }}>
 
@@ -64,8 +67,21 @@
                     <li>
                         <span class="ligne-titre">{{ ligne.titre }}</span>
                         <span>
-                            <a href="{{ path('ligne', {ligne: ligne.id}) }}"><i class="bi bi-pencil"></i></a>
-                            <a class="js-confirm" href="{{ path('ligneSupp', {ligne: ligne.id}) }}"><i class="bi bi-trash"></i></a>
+                            {% if ligne.class == 'Ligne' %}
+                                <a href="{{ path('formLigne', {ligne: ligne.id}) }}"><i class="bi bi-pencil"></i></a>
+                                <a class="js-confirm"
+                                   href="{{ path('deleteLigne', {ligne: ligne.id}) }}"
+                                   data-method="DELETE"
+                                ><i class="bi bi-trash"></i></a>
+                            {% endif %}
+
+                            {% if ligne.class == 'Competence' %}
+                                <a href="{{ path('formCompetence', {competence: ligne.id}) }}"><i class="bi bi-pencil"></i></a>
+                                <a class="js-confirm"
+                                   href="{{ path('deleteCompetence', {competence: ligne.id}) }}"
+                                   data-method="DELETE"
+                                ><i class="bi bi-trash"></i></a>
+                            {% endif %}
                         </span>
                     </li>
                 {% endfor %}

@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CV Clément Godard{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('cv') }}
+{% endblock %}
+
+{% block stylesheets %}
+    {# Pour appeller une feuille de style seulement pour impression #}
+    {#    {{ encore_entry_link_tags('cv', null, '_default', {'media': 'print'}) }}#}
+    {{ encore_entry_link_tags('cv') }}
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        {% block main %}
+            <main>
+                <div id="infos">
+                    <img id="profil" src="https://www.clement-godard.fr/assets/cv/profil.webp" alt="Photo de profil" height="100" width="100" loading="lazy" />
+
+                    <h1>Clément Godard</h1>
+                    <h2>Développeur Web</h2>
+
+                    <ul>
+                        <li><a href="https://github.com/clementgodard">Github</a></li>
+                        <li><a href="https://www.linkedin.com/in/clement-godard">LinkedIn</a></li>
+                        <li><a href="https://my.indeed.com/p/clmentg-h87m5dm">Indeed</a></li>
+                        <li><a href="tel:+33645379694">Téléphone</a></li>
+                        <li><a href="mailto:clement_godard@hotmail.fr">E-mail</a></li>
+                    </ul>
+                </div>
+
+                {% from 'cv/macro/categorie.html.twig' import recursiveCategorie %}
+
+                {% for categorie in categories %}
+                    {{ recursiveCategorie(categorie, 1) }}
+                {% endfor %}
+            </main>
+        {% endblock %}
+
+        {% block footer %}
+            <footer>
+                <p>Site réalisé par Clément Godard <a href="#">code source</a></p>
+            </footer>
+        {% endblock %}
+    </div>
+
+{% endblock %}

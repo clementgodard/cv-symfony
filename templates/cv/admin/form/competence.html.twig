@@ -1,0 +1,25 @@
+{% extends 'cv/admin/base.html.twig' %}
+
+{% block title %}Formulaire compétence{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+
+    <div class="container">
+        <h1>Formulaire compétence</h1>
+
+        {{ form_start(form) }}
+            {{ form_row(form.titre) }}
+            {{ form_row(form.categorie) }}
+
+            {{ form_row(form.contenu) }}
+            {{ form_row(form.note) }}
+            {{ form_row(form.dateDebut) }}
+
+            {{ form_row(form.actif) }}
+            {{ form_row(form.save) }}
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
