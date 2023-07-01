@@ -268,13 +268,7 @@ class AppFixtures extends Fixture
 
     private function extractLigne(array $l, Categorie $categorie): Ligne|Competence
     {
-//        dump($l);
-
-        dump(!isset($l['note'], $l));
-        dump(!isset($l['contenu'], $l));
-
         if (!isset($l['note']) && !isset($l['contenu'])) {
-            dump('ligne');
             $ligne = new Ligne();
             $ligne
                 ->setTitre($l['titre'])
@@ -284,7 +278,6 @@ class AppFixtures extends Fixture
 
             return $ligne;
         } else {
-            dump('compétence');
             $competence = new Competence();
             $competence
                 ->setTitre($l['titre'])
