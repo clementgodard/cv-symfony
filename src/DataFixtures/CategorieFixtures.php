@@ -9,7 +9,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ObjectManager;
 
-class AppFixtures extends Fixture
+class CategorieFixtures extends Fixture
 {
     const DATAS = [
         [

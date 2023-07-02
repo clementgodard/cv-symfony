@@ -17,3 +17,10 @@
     }
   }
 }
+
+label.required:not(.form-check-label)::after, legend.required::after {
+  margin-left: 0.35ch;
+  content: '*';
+  color: red;
+  vertical-align: super;
+}
