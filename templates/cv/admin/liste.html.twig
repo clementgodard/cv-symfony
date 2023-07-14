@@ -16,10 +16,9 @@
     {{ parent() }}
 
     {% from 'cv/macro/categorie.html.twig' import recursiveCategorieAdmin %}
-
     <main id="liste" class="container">
         {% for categorie in categories %}
-            {{ recursiveCategorieAdmin(categorie, 1) }}
+            {{ recursiveCategorieAdmin(categorie, 1, nbRootCategories-1) }}
         {% endfor %}
     </main>
 {% endblock %}

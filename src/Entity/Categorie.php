@@ -28,6 +28,7 @@ class Categorie
     private ?Categorie $parent = null;
 
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Categorie::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[ORM\OrderBy(['position' => 'ASC'])]
     private ?Collection $categorieEnfant = null;
 
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: AbstractLigne::class, cascade: ['persist', 'remove'], orphanRemoval: true)]

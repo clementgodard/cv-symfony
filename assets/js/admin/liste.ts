@@ -1,15 +1,14 @@
 import '../../styles/admin/liste.scss';
 
-const deleteButtons = document.querySelectorAll('.js-confirm');
+const deleteButtons = document.querySelectorAll('.js-confirm, .js-ajax');
 
 deleteButtons.forEach((button) => {
     button.addEventListener('click', (e) => {
         e.preventDefault();
-        if (confirm('êtes-vous sûr ?')) {
-            const target = e.currentTarget;
-            if (target instanceof HTMLAnchorElement) {
-                const url: string = target.getAttribute('href');
-                const method: string = target.dataset.method;
+        if (button.classList.contains('js-ajax') || confirm('êtes-vous sûr ?')) {
+            if (button instanceof HTMLAnchorElement) {
+                const url: string = button.getAttribute('href');
+                const method: string = button.dataset.method;
 
                 if (url !== null && url !== '') {
                     fetch(url, {
@@ -26,9 +25,10 @@ deleteButtons.forEach((button) => {
                         }
                     })
                     .then((data) => {
-                        if (typeof data === 'string' && data === 'OK') {
+                        if (typeof data === 'string') {
                             // TODO: Toast
-                            alert('SUPPRIMER !!!');
+                            // alert(data);
+                            location.reload();
                         } else {
                             console.error(data);
                             alert('Pas normal');

@@ -56,9 +56,63 @@ class CategorieController extends AbstractController
             $entityManager->remove($categorie);
             $entityManager->flush();
 
-            return new JsonResponse('OK');
+            return new JsonResponse('Catégorie : ' . $categorie->getLibelle() . ' supprimé avec succès !');
         } catch (Exception $e) {
-            return new JsonResponse('Impossible de supprimer la catégorie : '.$e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+            return new JsonResponse('Impossible de supprimer la catégorie : ' . $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    #[Route('/{id<\d+>}/{up<[01]>}', name: 'updateCategoriePosition', methods: ['PATCH'])]
+    public function updateCategoriePosition(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        Categorie $categorie,
+        bool $up,
+    ): Response {
+        if (!$request->isXmlHttpRequest()) {
+            $this->addFlash('warning', 'Faire une requête AJAX');
+            return $this->redirectToRoute('liste');
+        }
+
+        // TRI
+        $categories = $entityManager->getRepository(Categorie::class)->findBy([
+            'parent' => $categorie->getParent()
+        ], [
+            'position' => 'ASC'
+        ]);
+
+        foreach ($categories as $i => $c) {
+            if ($c->getPosition() !== $i) {
+                $c->setPosition($i);
+                $entityManager->persist($c);
+            }
+        }
+        $entityManager->flush();
+
+
+        // On suppose que les autres sont déjà dans le bon ordre
+        $actualPosition = $categorie->getPosition();
+        $newPostion = ($up ? $actualPosition + 1 : $actualPosition - 1);
+
+        $categorieAtNewPosition = $entityManager->getRepository(Categorie::class)->findOneBy([
+            'position' => $newPostion,
+            'parent' => $categorie->getParent(),
+        ]);
+
+        if ($categorieAtNewPosition === null) {
+            return new JsonResponse(
+                'Aucune catégorie trouvée à la position ' . $newPostion .
+                ' pour la catégorie parente ' . $categorie->getParent()->getLibelle(),
+                Response::HTTP_NOT_FOUND
+            );
+        }
+
+        $categorie->setPosition($newPostion);
+        $categorieAtNewPosition->setPosition($actualPosition);
+
+        $entityManager->persist($categorie);
+        $entityManager->persist($categorieAtNewPosition);
+        $entityManager->flush();
+        return new JsonResponse('ok');
     }
 }

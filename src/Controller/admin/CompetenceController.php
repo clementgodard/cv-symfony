@@ -56,9 +56,9 @@ class CompetenceController extends AbstractController
             $entityManager->remove($competence);
             $entityManager->flush();
 
-            return new JsonResponse('OK');
+            return new JsonResponse('Compétence : ' . $competence->getTitre() . ' supprimé avec succès !');
         } catch (Exception $e) {
-            return new JsonResponse('Impossible de supprimer la compétence : '.$e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+            return new JsonResponse('Impossible de supprimer la compétence : ' . $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

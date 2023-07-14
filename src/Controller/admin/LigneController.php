@@ -2,6 +2,7 @@
 
 namespace App\Controller\admin;
 
+use App\Entity\Abstract\AbstractLigne;
 use App\Entity\Ligne;
 use App\Form\LigneType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -53,9 +54,64 @@ class LigneController extends AbstractController
             $entityManager->remove($ligne);
             $entityManager->flush();
 
-            return new JsonResponse('OK');
+            return new JsonResponse('Ligne : ' . $ligne->getTitre() . ' supprimé avec succès !');
         } catch (Exception $e) {
-            return new JsonResponse('Impossible de supprimer la ligne : '.$e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+            return new JsonResponse('Impossible de supprimer la ligne : ' . $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    #[Route('/{ligne<\d+>}/{up<[01]>}', name: 'updateLignePosition', methods: ['PATCH'])]
+    public function updateCompetencePosition(
+        Request                $request,
+        EntityManagerInterface $entityManager,
+        AbstractLigne          $ligne,
+        bool                   $up
+    ): Response
+    {
+        if (!$request->isXmlHttpRequest()) {
+            $this->addFlash('warning', 'Faire une requête AJAX');
+            return $this->redirectToRoute('liste');
+        }
+
+        // TRI
+        $lignes = $entityManager->getRepository(AbstractLigne::class)->findBy([
+            'categorie' => $ligne->getCategorie()
+        ], [
+            'position' => 'ASC'
+        ]);
+
+        foreach ($lignes as $i => $l) {
+            if ($l->getPosition() !== $i) {
+                $l->setPosition($i);
+                $entityManager->persist($l);
+            }
+        }
+
+        $entityManager->flush();
+
+        // On suppose que les autres sont déjà dans le bon ordre
+        $actualPosition = $ligne->getPosition();
+        $newPostion = ($up ? $actualPosition + 1 : $actualPosition - 1);
+
+        $ligneAtNewPosition = $entityManager->getRepository(AbstractLigne::class)->findOneBy([
+            'position' => $newPostion,
+            'categorie' => $ligne->getCategorie()
+        ]);
+
+        if ($ligneAtNewPosition === null) {
+            return new JsonResponse(
+                'Aucune ligne trouvée à la position ' . $newPostion .
+                ' pour la catégorie ' . $ligne->getCategorie()->getLibelle(),
+                Response::HTTP_NOT_FOUND
+            );
+        }
+
+        $ligne->setPosition($newPostion);
+        $ligneAtNewPosition->setPosition($actualPosition);
+
+        $entityManager->persist($ligne);
+        $entityManager->persist($ligneAtNewPosition);
+        $entityManager->flush();
+        return new JsonResponse('ok');
     }
 }

@@ -19,4 +19,6 @@ class CvController extends AbstractController
             'categories' => $categories
         ]);
     }
+
+    // TODO: Faire une route "contactez-moi" avec un captcha et un envoi de mail via symfony sur mon adresse mail perso
 }

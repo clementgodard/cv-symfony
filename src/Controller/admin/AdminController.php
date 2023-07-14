@@ -21,9 +21,11 @@ class AdminController extends AbstractController
     public function liste(EntityManagerInterface $entityManager): Response
     {
         $categories = $entityManager->getRepository(Categorie::class)->findAllRootActiveByPosition();
+        $countRootCategories = $entityManager->getRepository(Categorie::class)->count(['parent' => null]);
 
         return $this->render('cv/admin/liste.html.twig', [
-            'categories' => $categories
+            'categories' => $categories,
+            'nbRootCategories' => $countRootCategories
         ]);
     }
 }
