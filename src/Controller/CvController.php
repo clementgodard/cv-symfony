@@ -16,7 +16,7 @@ class CvController extends AbstractController
         $categories = $em->getRepository(Categorie::class)->findAllRootActiveByPosition();
 
         return $this->render('cv/cv.html.twig', [
-            'categories' => $categories
+            'categories' => $categories,
         ]);
     }
 
