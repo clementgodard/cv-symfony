@@ -60,6 +60,7 @@ class Categorie
     public function setActif(bool $actif): Categorie
     {
         $this->actif = $actif;
+
         return $this;
     }
 
@@ -71,6 +72,7 @@ class Categorie
     public function setParent(?Categorie $parent): Categorie
     {
         $this->parent = $parent;
+
         return $this;
     }
 
@@ -82,6 +84,7 @@ class Categorie
     public function setLignes(?Collection $lignes): Categorie
     {
         $this->lignes = $lignes;
+
         return $this;
     }
 
@@ -93,6 +96,7 @@ class Categorie
     public function setPosition(int $position): Categorie
     {
         $this->position = $position;
+
         return $this;
     }
 
@@ -115,14 +119,14 @@ class Categorie
 
     public function getFullPathLibelle(string $return = ''): string
     {
-        if ($this->getParent() === null) {
-            if ($return === '') {
+        if (null === $this->getParent()) {
+            if ('' === $return) {
                 return $this->libelle;
             } else {
-                return $this->libelle . $return;
+                return $this->libelle.$return;
             }
         } else {
-            return $this->getParent()->getFullPathLibelle(' > '. $this->getLibelle() . $return);
+            return $this->getParent()->getFullPathLibelle(' > '.$this->getLibelle().$return);
         }
     }
 }

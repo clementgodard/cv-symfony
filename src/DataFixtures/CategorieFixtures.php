@@ -11,7 +11,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class CategorieFixtures extends Fixture
 {
-    const DATAS = [
+    public const DATAS = [
         [
             'libelle' => 'Compétences',
             'position' => 0,
@@ -32,15 +32,15 @@ class CategorieFixtures extends Fixture
                                     'contenu' => 'Je pratique ce langage depuis maintenant 3ans',
                                     'position' => 0,
                                     'note' => 85,
-                                    'actif' => true
+                                    'actif' => true,
                                 ], [
                                     'titre' => 'SQL',
                                     'contenu' => 'L\'incontournable',
                                     'position' => 1,
                                     'note' => 80,
-                                    'actif' => true
-                                ]
-                            ]
+                                    'actif' => true,
+                                ],
+                            ],
                         ], [
                             'libelle' => 'Front-end',
                             'position' => 1,
@@ -51,19 +51,19 @@ class CategorieFixtures extends Fixture
                                     'contenu' => 'Je ne suis pas designer mais je connais bien les possibilités de ce langage et ses enjeux pour un site web',
                                     'position' => 0,
                                     'note' => 70,
-                                    'actif' => true
+                                    'actif' => true,
                                 ], [
                                     'titre' => 'Javascript / Typescript',
                                     'contenu' => 'Bien qu\'ayant envie de me perfectionner sur les nouveautés ES6+, j\'arrives toujours à mes fins avec ce langage',
                                     'position' => 75,
-                                    'actif' => true
+                                    'actif' => true,
                                 ], [
                                     'titre' => 'HTML',
                                     'contenu' => '<strong>SEO friendly</strong>',
                                     'position' => 90,
-                                    'actif' => true
-                                ]
-                            ]
+                                    'actif' => true,
+                                ],
+                            ],
                         ], [
                             'libelle' => 'Autres',
                             'position' => 2,
@@ -72,17 +72,17 @@ class CategorieFixtures extends Fixture
                                 [
                                     'titre' => 'Script bash',
                                     'position' => 0,
-                                    'actif' => true
+                                    'actif' => true,
                                 ], [
                                     'titre' => 'Git',
                                     'contenu' => 'Un incontournable du métier',
                                     'position' => 1,
                                     'note' => 83,
-                                    'actif' => true
-                                ]
-                            ]
-                        ]
-                    ]
+                                    'actif' => true,
+                                ],
+                            ],
+                        ],
+                    ],
                 ], [
                     'libelle' => 'Framework',
                     'position' => 1,
@@ -98,9 +98,9 @@ class CategorieFixtures extends Fixture
                                     'contenu' => 'Mon environnement de travail préféré',
                                     'position' => 0,
                                     'note' => 78,
-                                    'actif' => true
-                                ]
-                            ]
+                                    'actif' => true,
+                                ],
+                            ],
                         ], [
                             'libelle' => 'Javascript',
                             'position' => 1,
@@ -111,23 +111,23 @@ class CategorieFixtures extends Fixture
                                     'contenu' => 'Bien obligé de le connaitre mais je l\'évite de plus en plus',
                                     'position' => 0,
                                     'note' => 45,
-                                    'actif' => true
+                                    'actif' => true,
                                 ], [
                                     'titre' => 'Angular',
                                     'contenu' => 'Utiliser pendant mes études j\'ai encore quelques restes',
                                     'position' => 1,
                                     'note' => 55,
-                                    'actif' => true
+                                    'actif' => true,
                                 ], [
                                     'titre' => 'Bootstrap',
                                     'contenu' => 'Très bonne librairie bien qu\'un peu volumineuse',
                                     'position' => 3,
                                     'note' => 70,
-                                    'actif' => true
-                                ]
-                            ]
-                        ]
-                    ]
+                                    'actif' => true,
+                                ],
+                            ],
+                        ],
+                    ],
                 ], [
                     'libelle' => 'Linux',
                     'position' => 2,
@@ -138,49 +138,49 @@ class CategorieFixtures extends Fixture
                             'contenu' => 'Installation, maintenance',
                             'position' => 0,
                             'note' => 90,
-                            'actif' => true
+                            'actif' => true,
                         ], [
                             'titre' => 'Mysql',
                             'contenu' => 'Installation, maintenance',
                             'position' => 1,
-                            'actif' => true
+                            'actif' => true,
                         ], [
                             'titre' => 'Gestion des DNS',
                             'contenu' => 'Une fois en possession d\'un nom de domaine bien évidement',
                             'position' => 2,
-                            'actif' => true
+                            'actif' => true,
                         ], [
                             'titre' => 'Let\'s encrypt',
                             'contenu' => 'Pouvoir passer en https (bien que la procédure soit très simple)',
                             'position' => 3,
-                            'actif' => true
+                            'actif' => true,
                         ], [
                             'titre' => 'PHP FPM',
                             'contenu' => 'Gagner en performances sans dépendre de apache',
                             'position' => 4,
-                            'actif' => true
+                            'actif' => true,
                         ], [
                             'titre' => 'Mise en place d\'un pare-feu',
                             'position' => 5,
-                            'actif' => true
+                            'actif' => true,
                         ], [
                             'titre' => 'Installation d\'un FTP / SFTP',
                             'position' => 6,
-                            'actif' => true
+                            'actif' => true,
                         ], [
                             'titre' => 'Gitlab / Gitlab-CI',
                             'contenu' => 'Mise ne place de déploiement automatique',
                             'position' => 7,
-                            'actif' => true
+                            'actif' => true,
                         ], [
                             'titre' => 'Docker',
                             'contenu' => 'Jamais utiliser dans le monde du travail',
                             'position' => 8,
-                            'actif' => true
-                        ]
-                    ]
-                ]
-            ]
+                            'actif' => true,
+                        ],
+                    ],
+                ],
+            ],
         ], [
             'libelle' => 'Formation',
             'position' => 1,
@@ -190,14 +190,14 @@ class CategorieFixtures extends Fixture
                     'titre' => 'Développeur Web et Web mobile',
                     'contenu' => 'Diplôme obtenu auprès de la Wild Code School à La Loupe',
                     'position' => 0,
-                    'actif' => true
+                    'actif' => true,
                 ], [
                     'titre' => 'Systèmes informatique et réseaux',
                     'contenu' => 'BTS SNIR obtenu au lycée Modeste Leroy à Évreux',
                     'position' => 1,
-                    'actif' => true
-                ]
-            ]
+                    'actif' => true,
+                ],
+            ],
         ], [
             'libelle' => 'Expériences',
             'position' => 2,
@@ -207,20 +207,20 @@ class CategorieFixtures extends Fixture
                     'titre' => 'Développeur web à Trésor du Patrimoine',
                     'contenu' => 'Près de 3ans de loyaux services',
                     'position' => 0,
-                    'actif' => true
+                    'actif' => true,
                 ], [
                     'titre' => 'Intérim à la CPAM de Évreux',
                     'contenu' => 'Développeur d\'applications internes, principalement avec Symfony',
                     'position' => 1,
-                    'actif' => true
+                    'actif' => true,
                 ], [
                     'titre' => 'Stage à la CPAM de Évreux',
                     'contenu' => 'Maintenir une application en Java Spring',
                     'position' => 2,
-                    'actif' => true
-                ]
-            ]
-        ]
+                    'actif' => true,
+                ],
+            ],
+        ],
     ];
 
     public function load(ObjectManager $manager): void

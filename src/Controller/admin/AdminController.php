@@ -25,7 +25,7 @@ class AdminController extends AbstractController
 
         return $this->render('cv/admin/liste.html.twig', [
             'categories' => $categories,
-            'nbRootCategories' => $countRootCategories
+            'nbRootCategories' => $countRootCategories,
         ]);
     }
 }

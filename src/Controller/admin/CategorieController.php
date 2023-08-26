@@ -5,7 +5,6 @@ namespace App\Controller\admin;
 use App\Entity\Categorie;
 use App\Form\CategorieType;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -17,9 +16,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategorieController extends AbstractController
 {
     #[Route('/{categorie<\d+>}', name: 'formCategorie', methods: ['GET', 'POST'])]
-    public function formCategorie(Request $request, EntityManagerInterface $entityManager, ?Categorie $categorie = null): Response
+    public function formCategorie(Request $request, EntityManagerInterface $entityManager, Categorie $categorie = null): Response
     {
-        if ($categorie === null) {
+        if (null === $categorie) {
             $categorie = new Categorie();
         }
 
@@ -32,15 +31,15 @@ class CategorieController extends AbstractController
             $entityManager->persist($categorie);
             $entityManager->flush();
 
-            $this->addFlash('success', 'La catégorie ' . $categorie->getLibelle() . ' a été sauvegardée');
+            $this->addFlash('success', 'La catégorie '.$categorie->getLibelle().' a été sauvegardée');
 
             return $this->redirectToRoute('formCategorie', [
-                'categorie' => $categorie->getId()
+                'categorie' => $categorie->getId(),
             ]);
         }
 
         return $this->render('cv/admin/form/categorie.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
@@ -49,6 +48,7 @@ class CategorieController extends AbstractController
     {
         if (!$request->isXmlHttpRequest()) {
             $this->addFlash('warning', 'Faire une requête AJAX pour supprimer');
+
             return $this->redirectToRoute('liste');
         }
 
@@ -56,9 +56,9 @@ class CategorieController extends AbstractController
             $entityManager->remove($categorie);
             $entityManager->flush();
 
-            return new JsonResponse('Catégorie : ' . $categorie->getLibelle() . ' supprimé avec succès !');
-        } catch (Exception $e) {
-            return new JsonResponse('Impossible de supprimer la catégorie : ' . $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+            return new JsonResponse('Catégorie : '.$categorie->getLibelle().' supprimé avec succès !');
+        } catch (\Exception $e) {
+            return new JsonResponse('Impossible de supprimer la catégorie : '.$e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -71,14 +71,15 @@ class CategorieController extends AbstractController
     ): Response {
         if (!$request->isXmlHttpRequest()) {
             $this->addFlash('warning', 'Faire une requête AJAX');
+
             return $this->redirectToRoute('liste');
         }
 
         // TRI
         $categories = $entityManager->getRepository(Categorie::class)->findBy([
-            'parent' => $categorie->getParent()
+            'parent' => $categorie->getParent(),
         ], [
-            'position' => 'ASC'
+            'position' => 'ASC',
         ]);
 
         foreach ($categories as $i => $c) {
@@ -89,7 +90,6 @@ class CategorieController extends AbstractController
         }
         $entityManager->flush();
 
-
         // On suppose que les autres sont déjà dans le bon ordre
         $actualPosition = $categorie->getPosition();
         $newPostion = ($up ? $actualPosition + 1 : $actualPosition - 1);
@@ -99,10 +99,10 @@ class CategorieController extends AbstractController
             'parent' => $categorie->getParent(),
         ]);
 
-        if ($categorieAtNewPosition === null) {
+        if (null === $categorieAtNewPosition) {
             return new JsonResponse(
-                'Aucune catégorie trouvée à la position ' . $newPostion .
-                ' pour la catégorie parente ' . $categorie->getParent()->getLibelle(),
+                'Aucune catégorie trouvée à la position '.$newPostion.
+                ' pour la catégorie parente '.$categorie->getParent()->getLibelle(),
                 Response::HTTP_NOT_FOUND
             );
         }
@@ -113,6 +113,7 @@ class CategorieController extends AbstractController
         $entityManager->persist($categorie);
         $entityManager->persist($categorieAtNewPosition);
         $entityManager->flush();
+
         return new JsonResponse('ok');
     }
 }

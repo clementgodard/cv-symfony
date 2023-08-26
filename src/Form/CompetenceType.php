@@ -17,17 +17,17 @@ class CompetenceType extends AbstractType
         $builder
             ->add('contenu', TextareaType::class, [
                 'label' => 'Contenu',
-                'required' => false
+                'required' => false,
             ])
             ->add('note', NumberType::class, [
                 'label' => 'Note',
                 'html5' => true,
-                'required' => false
+                'required' => false,
             ])
             ->add('dateDebut', DateType::class, [
                 'html5' => true,
                 'widget' => 'single_text',
-                'required' => false
+                'required' => false,
             ]);
     }
 
@@ -39,7 +39,7 @@ class CompetenceType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Competence::class
+            'data_class' => Competence::class,
         ]);
     }
 }

@@ -5,7 +5,6 @@ namespace App\Controller\admin;
 use App\Entity\Competence;
 use App\Form\CompetenceType;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -17,9 +16,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class CompetenceController extends AbstractController
 {
     #[Route('/{competence<\d+>}', name: 'formCompetence', methods: ['GET', 'POST'])]
-    public function formCompetence(Request $request, EntityManagerInterface $entityManager, ?Competence $competence = null): Response
+    public function formCompetence(Request $request, EntityManagerInterface $entityManager, Competence $competence = null): Response
     {
-        if ($competence === null) {
+        if (null === $competence) {
             $competence = new Competence();
         }
 
@@ -32,15 +31,15 @@ class CompetenceController extends AbstractController
             $entityManager->persist($competence);
             $entityManager->flush();
 
-            $this->addFlash('success', 'La compétence ' . $competence->getTitre() . ' a été enregistrée');
+            $this->addFlash('success', 'La compétence '.$competence->getTitre().' a été enregistrée');
 
             return $this->redirectToRoute('formCompetence', [
-                'competence' => $competence->getId()
+                'competence' => $competence->getId(),
             ]);
         }
 
         return $this->render('cv/admin/form/competence.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
@@ -49,6 +48,7 @@ class CompetenceController extends AbstractController
     {
         if (!$request->isXmlHttpRequest()) {
             $this->addFlash('warning', 'Faire une requête AJAX pour supprimer');
+
             return $this->redirectToRoute('liste');
         }
 
@@ -56,9 +56,9 @@ class CompetenceController extends AbstractController
             $entityManager->remove($competence);
             $entityManager->flush();
 
-            return new JsonResponse('Compétence : ' . $competence->getTitre() . ' supprimé avec succès !');
-        } catch (Exception $e) {
-            return new JsonResponse('Impossible de supprimer la compétence : ' . $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+            return new JsonResponse('Compétence : '.$competence->getTitre().' supprimé avec succès !');
+        } catch (\Exception $e) {
+            return new JsonResponse('Impossible de supprimer la compétence : '.$e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

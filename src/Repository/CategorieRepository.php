@@ -4,7 +4,6 @@ namespace App\Repository;
 
 use App\Entity\Categorie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 class CategorieRepository extends ServiceEntityRepository

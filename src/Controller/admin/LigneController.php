@@ -6,7 +6,6 @@ use App\Entity\Abstract\AbstractLigne;
 use App\Entity\Ligne;
 use App\Form\LigneType;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -18,9 +17,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class LigneController extends AbstractController
 {
     #[Route('/{ligne<\d+>}', name: 'formLigne', methods: ['GET', 'POST'])]
-    public function formLigne(Request $request, EntityManagerInterface $entityManager, ?Ligne $ligne = null): Response
+    public function formLigne(Request $request, EntityManagerInterface $entityManager, Ligne $ligne = null): Response
     {
-        if ($ligne === null) {
+        if (null === $ligne) {
             $ligne = new Ligne();
         }
 
@@ -33,12 +32,13 @@ class LigneController extends AbstractController
 
             $entityManager->persist($ligne);
             $entityManager->flush();
-            $this->addFlash('success', 'La ligne ' . $ligne->getTitre() . ' a été enregistrée');
+            $this->addFlash('success', 'La ligne '.$ligne->getTitre().' a été enregistrée');
+
             return $this->redirectToRoute('formLigne', ['ligne' => $ligne->getId()]);
         }
 
         return $this->render('cv/admin/form/ligne.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
@@ -47,6 +47,7 @@ class LigneController extends AbstractController
     {
         if (!$request->isXmlHttpRequest()) {
             $this->addFlash('warning', 'Faire une requête AJAX pour supprimer');
+
             return $this->redirectToRoute('liste');
         }
 
@@ -54,30 +55,30 @@ class LigneController extends AbstractController
             $entityManager->remove($ligne);
             $entityManager->flush();
 
-            return new JsonResponse('Ligne : ' . $ligne->getTitre() . ' supprimé avec succès !');
-        } catch (Exception $e) {
-            return new JsonResponse('Impossible de supprimer la ligne : ' . $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+            return new JsonResponse('Ligne : '.$ligne->getTitre().' supprimé avec succès !');
+        } catch (\Exception $e) {
+            return new JsonResponse('Impossible de supprimer la ligne : '.$e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
     #[Route('/{ligne<\d+>}/{up<[01]>}', name: 'updateLignePosition', methods: ['PATCH'])]
     public function updateCompetencePosition(
-        Request                $request,
+        Request $request,
         EntityManagerInterface $entityManager,
-        AbstractLigne          $ligne,
-        bool                   $up
-    ): Response
-    {
+        AbstractLigne $ligne,
+        bool $up
+    ): Response {
         if (!$request->isXmlHttpRequest()) {
             $this->addFlash('warning', 'Faire une requête AJAX');
+
             return $this->redirectToRoute('liste');
         }
 
         // TRI
         $lignes = $entityManager->getRepository(AbstractLigne::class)->findBy([
-            'categorie' => $ligne->getCategorie()
+            'categorie' => $ligne->getCategorie(),
         ], [
-            'position' => 'ASC'
+            'position' => 'ASC',
         ]);
 
         foreach ($lignes as $i => $l) {
@@ -95,13 +96,13 @@ class LigneController extends AbstractController
 
         $ligneAtNewPosition = $entityManager->getRepository(AbstractLigne::class)->findOneBy([
             'position' => $newPostion,
-            'categorie' => $ligne->getCategorie()
+            'categorie' => $ligne->getCategorie(),
         ]);
 
-        if ($ligneAtNewPosition === null) {
+        if (null === $ligneAtNewPosition) {
             return new JsonResponse(
-                'Aucune ligne trouvée à la position ' . $newPostion .
-                ' pour la catégorie ' . $ligne->getCategorie()->getLibelle(),
+                'Aucune ligne trouvée à la position '.$newPostion.
+                ' pour la catégorie '.$ligne->getCategorie()->getLibelle(),
                 Response::HTTP_NOT_FOUND
             );
         }
@@ -112,6 +113,7 @@ class LigneController extends AbstractController
         $entityManager->persist($ligne);
         $entityManager->persist($ligneAtNewPosition);
         $entityManager->flush();
+
         return new JsonResponse('ok');
     }
 }

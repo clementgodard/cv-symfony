@@ -14,7 +14,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LigneType extends AbstractType
 {
-    public function __construct(private readonly EntityManagerInterface $entityManager) {}
+    public function __construct(private readonly EntityManagerInterface $entityManager)
+    {
+    }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -25,7 +27,7 @@ class LigneType extends AbstractType
             ->add('categorie', ChoiceType::class, [
                 'label' => 'Catégorie',
                 'choices' => $this->entityManager->getRepository(Categorie::class)->findAll(),
-                'choice_label' => fn(Categorie $categorie) => $categorie->getFullPathLibelle()
+                'choice_label' => fn (Categorie $categorie) => $categorie->getFullPathLibelle(),
             ])
             // TODO: Attribué automatiquement la dernière position pour la catégorie choisis à la soumission
 //            ->add('position', NumberType::class, [
@@ -36,11 +38,11 @@ class LigneType extends AbstractType
                 'expanded' => true,
                 'choices' => [
                     'Non' => false,
-                    'Oui' => true
-                ]
+                    'Oui' => true,
+                ],
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'Sauvegarder'
+                'label' => 'Sauvegarder',
             ]);
     }
 
@@ -48,7 +50,7 @@ class LigneType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Ligne::class,
-            'required' => true
+            'required' => true,
         ]);
     }
 }
