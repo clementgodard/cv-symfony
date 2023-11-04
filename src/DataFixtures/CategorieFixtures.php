@@ -228,7 +228,7 @@ class CategorieFixtures extends Fixture
         // Pour chacune des catégories décrites
         foreach (self::DATAS as $data) {
             // On extrait et on sauvegarde l'objet
-            $categorieMere = self::extractCategorie($data);
+            $categorieMere = $this->extractCategorie($data);
             $manager->persist($categorieMere);
         }
 

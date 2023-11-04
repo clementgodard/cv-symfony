@@ -14,9 +14,7 @@
 {% endblock %}
 
 {% block body %}
-
-    <div class="container">
-
+    <main class="container">
         {% block main %}
             <main>
                 <div id="infos">
@@ -34,7 +32,7 @@
                     </ul>
                 </div>
 
-                {% from 'cv/macro/categorie.html.twig' import recursiveCategorie %}
+                {% from 'macro/categorie.html.twig' import recursiveCategorie %}
 
                 {% for categorie in categories %}
                     {{ recursiveCategorie(categorie, 1) }}
@@ -44,9 +42,10 @@
 
         {% block footer %}
             <footer>
-                <p>Site réalisé par Clément Godard <a href="#">code source</a></p>
+                <p>Site réalisé par Clément Godard <a href="https://github.com/clementgodard/cv-symfony">code source</a>
+                </p>
             </footer>
         {% endblock %}
-    </div>
+    </main>
 
 {% endblock %}

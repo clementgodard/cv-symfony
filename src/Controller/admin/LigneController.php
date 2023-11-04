@@ -37,7 +37,7 @@ class LigneController extends AbstractController
             return $this->redirectToRoute('formLigne', ['ligne' => $ligne->getId()]);
         }
 
-        return $this->render('cv/admin/form/ligne.html.twig', [
+        return $this->render('admin/form/ligne.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -45,12 +45,6 @@ class LigneController extends AbstractController
     #[Route('/{ligne<\d+>}', name: 'deleteLigne', methods: ['DELETE'])]
     public function deleteLigne(Request $request, EntityManagerInterface $entityManager, Ligne $ligne): JsonResponse|RedirectResponse
     {
-        if (!$request->isXmlHttpRequest()) {
-            $this->addFlash('warning', 'Faire une requête AJAX pour supprimer');
-
-            return $this->redirectToRoute('liste');
-        }
-
         try {
             $entityManager->remove($ligne);
             $entityManager->flush();

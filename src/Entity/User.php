@@ -2,22 +2,23 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-#[ORM\Entity]
+#[Entity]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[Id, GeneratedValue, Column(type: 'integer')]
+    private int $id;
 
-    #[ORM\Column(type: 'string')]
+    #[Column(type: 'string')]
     private string $username;
 
-    #[ORM\Column(type: 'string')]
+    #[Column(type: 'string')]
     private string $password;
 
     public function getRoles(): array
@@ -46,12 +47,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function setId(?int $id): User
+    public function setId(int $id): User
     {
         $this->id = $id;
 

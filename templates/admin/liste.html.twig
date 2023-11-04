@@ -1,4 +1,4 @@
-{% extends 'cv/admin/base.html.twig' %}
+{% extends 'admin/base.html.twig' %}
 
 {% block title %}Liste des catégories{% endblock %}
 
@@ -15,7 +15,7 @@
 {% block body %}
     {{ parent() }}
 
-    {% from 'cv/macro/categorie.html.twig' import recursiveCategorieAdmin %}
+    {% from 'macro/categorie.html.twig' import recursiveCategorieAdmin %}
     <main id="liste" class="container">
         {% for categorie in categories %}
             {{ recursiveCategorieAdmin(categorie, 1, nbRootCategories-1) }}

@@ -4,18 +4,24 @@ namespace App\Entity;
 
 use App\Entity\Abstract\AbstractLigne;
 use App\Repository\CompetenceRepository;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: CompetenceRepository::class)]
+#[Entity(repositoryClass: CompetenceRepository::class)]
 class Competence extends AbstractLigne
 {
-    #[ORM\Column(nullable: true)]
+    public const NOTE_MAX = 100;
+
+    #[Column(type: 'string', nullable: true)]
     private ?string $contenu = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $note;
+    #[Column(type: 'float', nullable: true)]
+    #[Assert\PositiveOrZero]
+    #[Assert\LessThanOrEqual(value: Competence::NOTE_MAX, message: 'Une note ne peux pas dépasser '.Competence::NOTE_MAX)]
+    private ?float $note;
 
-    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Column(type: 'datetime', nullable: true)]
     private ?\DateTime $dateDebut;
 
     public function getContenu(): ?string
@@ -30,12 +36,12 @@ class Competence extends AbstractLigne
         return $this;
     }
 
-    public function getNote(): ?int
+    public function getNote(): ?float
     {
         return $this->note;
     }
 
-    public function setNote(?int $note): Competence
+    public function setNote(?float $note): Competence
     {
         $this->note = $note;
 

@@ -16,8 +16,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class CompetenceController extends AbstractController
 {
     #[Route('/{competence<\d+>}', name: 'formCompetence', methods: ['GET', 'POST'])]
-    public function formCompetence(Request $request, EntityManagerInterface $entityManager, Competence $competence = null): Response
-    {
+    public function formCompetence(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        Competence $competence = null
+    ): Response {
         if (null === $competence) {
             $competence = new Competence();
         }
@@ -26,19 +29,17 @@ class CompetenceController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var Competence $competence */
-            $competence = $form->getData();
             $entityManager->persist($competence);
             $entityManager->flush();
 
-            $this->addFlash('success', 'La compétence '.$competence->getTitre().' a été enregistrée');
+            $this->addFlash('success', 'La compétence '.$competence->getTitre().' a été enregistrée !');
 
             return $this->redirectToRoute('formCompetence', [
                 'competence' => $competence->getId(),
             ]);
         }
 
-        return $this->render('cv/admin/form/competence.html.twig', [
+        return $this->render('admin/form/competence.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -46,12 +47,6 @@ class CompetenceController extends AbstractController
     #[Route('/{competence<\d+>}', name: 'deleteCompetence', methods: ['DELETE'])]
     public function deleteCompetence(Request $request, EntityManagerInterface $entityManager, Competence $competence): JsonResponse|RedirectResponse
     {
-        if (!$request->isXmlHttpRequest()) {
-            $this->addFlash('warning', 'Faire une requête AJAX pour supprimer');
-
-            return $this->redirectToRoute('liste');
-        }
-
         try {
             $entityManager->remove($competence);
             $entityManager->flush();

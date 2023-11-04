@@ -5,49 +5,72 @@ namespace App\Entity;
 use App\Entity\Abstract\AbstractLigne;
 use App\Repository\CategorieRepository;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\OrderBy;
 
-#[ORM\Entity(repositoryClass: CategorieRepository::class)]
+#[Entity(repositoryClass: CategorieRepository::class)]
 class Categorie
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[Id, GeneratedValue, Column(type: 'integer')]
+    private int $id;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $libelle = null;
+    #[Column(type: 'string')]
+    private string $libelle;
 
-    #[ORM\Column]
+    #[Column(type: 'integer')]
     private int $position = 0;
 
-    #[ORM\Column]
+    #[Column(type: 'boolean')]
     private bool $actif = true;
 
-    #[ORM\ManyToOne(targetEntity: Categorie::class, inversedBy: 'categorieEnfant')]
+    #[ManyToOne(targetEntity: Categorie::class, inversedBy: 'categorieEnfant')]
     private ?Categorie $parent = null;
 
-    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Categorie::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
-    #[ORM\OrderBy(['position' => 'ASC'])]
+    #[OneToMany(mappedBy: 'parent', targetEntity: Categorie::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[OrderBy(['position' => 'ASC'])]
     private ?Collection $categorieEnfant = null;
 
-    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: AbstractLigne::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
-    #[ORM\OrderBy(['position' => 'ASC'])]
+    #[OneToMany(mappedBy: 'categorie', targetEntity: AbstractLigne::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[OrderBy(['position' => 'ASC'])]
     private ?Collection $lignes = null;
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getLibelle(): ?string
+    public function setId(int $id): Categorie
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    public function getLibelle(): string
     {
         return $this->libelle;
     }
 
-    public function setLibelle(string $libelle): self
+    public function setLibelle(string $libelle): Categorie
     {
         $this->libelle = $libelle;
+
+        return $this;
+    }
+
+    public function getPosition(): int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(int $position): Categorie
+    {
+        $this->position = $position;
 
         return $this;
     }
@@ -84,18 +107,6 @@ class Categorie
     public function setLignes(?Collection $lignes): Categorie
     {
         $this->lignes = $lignes;
-
-        return $this;
-    }
-
-    public function getPosition(): int
-    {
-        return $this->position;
-    }
-
-    public function setPosition(int $position): Categorie
-    {
-        $this->position = $position;
 
         return $this;
     }

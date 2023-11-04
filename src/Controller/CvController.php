@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CvController extends AbstractController
 {
-    #[Route('/', name: 'cv')]
+    #[Route('/', name: 'cv', methods: ['GET'])]
     public function index(EntityManagerInterface $em): Response
     {
         $categories = $em->getRepository(Categorie::class)->findAllRootActiveByPosition();

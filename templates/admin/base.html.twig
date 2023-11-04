@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('adminBase') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('adminBase') }}
+{% endblock %}
+
+{% block body %}
+    {{ include('admin/_partials/menu.html.twig') }}
+
+    <div class="container">
+        {% for flash in app.flashes('success') %}
+            <div class="alert alert-success alert-dismissible" role="alert">
+                {{ flash }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+
+        {% for flash in app.flashes('error') %}
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                {{ flash }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
+

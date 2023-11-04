@@ -5,36 +5,42 @@ namespace App\Entity\Abstract;
 use App\Entity\Categorie;
 use App\Entity\Competence;
 use App\Entity\Ligne;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\DiscriminatorColumn;
 use Doctrine\ORM\Mapping\DiscriminatorMap;
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\InheritanceType;
-
-// TODO: Use @Assert to constrain form fields
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[Entity]
 #[InheritanceType('JOINED')]
 #[DiscriminatorColumn(name: 'discriminator', type: 'string')]
-#[DiscriminatorMap(['ligne' => Ligne::class, 'competence' => Competence::class])]
+#[DiscriminatorMap([
+    'ligne' => Ligne::class,
+    'competence' => Competence::class,
+])]
 abstract class AbstractLigne
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[Id, GeneratedValue, Column(type: 'integer')]
     private ?int $id = null;
 
-    #[ORM\Column]
+    #[Column(type: 'string')]
     private string $titre = '';
 
-    #[ORM\Column]
+    #[Column(type: 'integer')]
+    #[Assert\PositiveOrZero]
     private int $position = 0;
 
-    #[ORM\Column]
+    #[Column(type: 'boolean')]
     private bool $actif = true;
 
-    #[ORM\ManyToOne(targetEntity: Categorie::class, inversedBy: 'lignes')]
-    private ?Categorie $categorie = null;
+    #[ManyToOne(targetEntity: Categorie::class, inversedBy: 'lignes')]
+    #[JoinColumn(nullable: false)]
+    private Categorie $categorie;
 
     public function getId(): ?int
     {
@@ -84,12 +90,12 @@ abstract class AbstractLigne
         return $this;
     }
 
-    public function getCategorie(): ?Categorie
+    public function getCategorie(): Categorie
     {
         return $this->categorie;
     }
 
-    public function setCategorie(?Categorie $categorie): AbstractLigne
+    public function setCategorie(Categorie $categorie): AbstractLigne
     {
         $this->categorie = $categorie;
 
