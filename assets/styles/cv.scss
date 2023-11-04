@@ -30,7 +30,7 @@ li {
 #infos {
     text-align: center;
 
-    img {
+    #profil {
         border-radius: 50%;
     }
 
@@ -78,7 +78,7 @@ li {
 
 main {
     div[data-depth] {
-        padding-left: 1.25rem;
+        padding-left: 1rem;
         border-left: 1px solid black;
 
         &[data-depth="1"] {
@@ -115,6 +115,7 @@ main {
             display: flex;
             flex-wrap: wrap;
             gap: 1rem;
+            padding-left: 1rem;
 
             li {
                 display: inline-block;

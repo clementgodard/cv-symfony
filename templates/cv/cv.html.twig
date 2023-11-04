@@ -18,17 +18,51 @@
         {% block main %}
             <main>
                 <div id="infos">
-                    <img id="profil" src="https://www.clement-godard.fr/assets/cv/profil.webp" alt="Photo de profil" height="100" width="100" loading="lazy" />
+                    <img id="profil"
+                         src="{{ asset('build/images/profil.webp') }}"
+                         alt="Photo de profil"
+                         height="100"
+                         width="100"
+                         loading="lazy"
+                    >
 
                     <h1>Clément Godard</h1>
                     <h2>Développeur Web</h2>
 
                     <ul>
-                        <li><a href="https://github.com/clementgodard">Github</a></li>
-                        <li><a href="https://www.linkedin.com/in/clement-godard">LinkedIn</a></li>
+                        <li>
+                            <a href="https://github.com/clementgodard">
+                                <img src="{{ asset('build/images/github.svg') }}" width="15" height="15"
+                                     alt="Logo github" loading="lazy">
+                                Github
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="https://www.linkedin.com/in/clement-godard">
+                                <img src="{{ asset('build/images/linkedin.svg') }}" width="15" height="15"
+                                     alt="Logo LinkedIn" loading="lazy">
+                                LinkedIn
+                            </a>
+                        </li>
+
                         <li><a href="https://my.indeed.com/p/clmentg-h87m5dm">Indeed</a></li>
-                        <li><a href="tel:+33645379694">Téléphone</a></li>
-                        <li><a href="mailto:clement_godard@hotmail.fr">E-mail</a></li>
+
+                        <li>
+                            <a href="tel:+33645379694">
+                                <img src="{{ asset('build/images/telephone.svg') }}" width="15" height="15"
+                                     alt="Logo téléphone" loading="lazy">
+                                Téléphone
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="mailto:clement_godard@hotmail.fr">
+                                <img src="{{ asset('build/images/envelope.svg') }}" width="15" height="15"
+                                     alt="Logo e-mail" loading="lazy">
+                                E-mail
+                            </a>
+                        </li>
                     </ul>
                 </div>
 
