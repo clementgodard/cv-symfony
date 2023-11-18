@@ -26,7 +26,8 @@ main {
     padding-left: 1.5rem;
 
     h3, h4, h5, h6 {
-      margin: 1rem;
+      margin: 0.25rem 0;
+      padding: 0.75rem 0.5rem;
       font-size: 1.5rem;
 
       &:hover {

@@ -5,8 +5,16 @@
         "@symfony/webpack-encore": "^3.0.0",
         "@testing-library/react": "^14.0.0",
         "@types/jest": "^29.5.4",
+        "@typescript-eslint/eslint-plugin": "^6.0.0",
+        "@typescript-eslint/parser": "^6.0.0",
         "core-js": "^3.23.0",
+        "eslint": "^8.2.0",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-config-airbnb-typescript": "^17.1.0",
+        "eslint-config-prettier": "^9.0.0",
+        "eslint-plugin-import": "^2.25.2",
         "file-loader": "^6.0.0",
+        "prettier": "^3.1.0",
         "regenerator-runtime": "^0.13.9",
         "sass": "^1.54.0",
         "sass-loader": "^13.0.0",
@@ -23,6 +31,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "@popperjs/core": "^2.11.6",
         "bootstrap": "^5.2.3",
         "bootstrap-icons": "^1.10.2"
     }
