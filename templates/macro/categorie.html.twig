@@ -46,28 +46,38 @@
 
     <div data-depth="{{ depth }}">
         <h{{ (depth + 2) }}>{{ categorie.libelle }}
+            {# Gestion des Catégories #}
             <span class="float-end">
                 <a href="{{ path('formCategorie', {categorie: categorie.id}) }}"><i class="bi bi-pencil"></i></a>
 
-                {% if categorie.parent is null and categorie.position < nbRootCategories  or categorie.parent is not null and categorie.parent.categorieEnfant is not null and categorie != categorie.parent.categorieEnfant | last %}
+                {% if categorie.parent is null
+                    and categorie.position < nbRootCategories
+                    or categorie.parent is not null
+                    and categorie.parent.categorieEnfant is not null
+                    and categorie != categorie.parent.categorieEnfant | last %}
                     <a
-                        class="js-ajax"
+                        {{ stimulus_controller('ajax', {'method': 'PATCH'}) }}
+                            {{ stimulus_action('ajax', 'sendAjax') }}
                         href="{{ path('updateCategoriePosition', {id: categorie.id, up: 1}) }}"
-                        data-method="PATCH"
                     ><i class="bi bi-arrow-down"></i></a>
                 {% endif %}
 
-                {% if categorie.parent is null and categorie.position > 0 or categorie.parent is not null and categorie.parent.categorieEnfant is not null and categorie != categorie.parent.categorieEnfant | first %}
+                {% if categorie.parent is null
+                    and categorie.position > 0
+                    or categorie.parent is not null
+                    and categorie.parent.categorieEnfant is not null
+                    and categorie != categorie.parent.categorieEnfant | first %}
                     <a
-                        class="js-ajax"
+                        {{ stimulus_controller('ajax', {'method': 'PATCH'}) }}
+                            {{ stimulus_action('ajax', 'sendAjax') }}
                         href="{{ path('updateCategoriePosition', {id: categorie.id, up: 0}) }}"
-                        data-method="PATCH"
                     ><i class="bi bi-arrow-up"></i></a>
                 {% endif %}
 
                 <a class="js-confirm"
+                    {{ stimulus_controller('ajax', {'method': 'DELETE'}) }}
+                        {{ stimulus_action('ajax', 'askForConfirmation') }}
                    href="{{ path('deleteCategorie', {categorie: categorie.id}) }}"
-                   data-method="DELETE"
                 ><i class="bi bi-trash"></i></a>
             </span>
         </h{{ (depth + 2) }}>
@@ -78,6 +88,7 @@
             {% endfor %}
         {% endif %}
 
+        {# Gestion des lignes #}
         {% if categorie.lignes | length > 0 %}
             <ul>
                 {% for ligne in categorie.lignes %}
@@ -88,22 +99,25 @@
                                 <a href="{{ path('formLigne', {ligne: ligne.id}) }}"><i class="bi bi-pencil"></i></a>
 
                                 {% if ligne != categorie.lignes | first %}
-                                    <a class="js-ajax"
-                                       href="{{ path('updateLignePosition', {ligne: ligne.id, up: 0}) }}"
-                                       data-method="PATCH"
-                                    ><i class="bi bi-arrow-left"></i></a>
+                                <a
+                                    {{ stimulus_controller('ajax', {'method': 'PATCH'}) }}
+                                        {{ stimulus_action('ajax', 'sendAjax') }}
+                                    href="{{ path('updateLignePosition', {ligne: ligne.id, up: 0}) }}"
+                                ><i class="bi bi-arrow-left"></i></a>
                                 {% endif %}
 
                                 {% if ligne != categorie.lignes | last %}
-                                    <a class="js-ajax"
-                                       href="{{ path('updateLignePosition', {ligne: ligne.id, up: 1}) }}"
-                                       data-method="PATCH"
-                                    ><i class="bi bi-arrow-right"></i></a>
+                                <a
+                                    {{ stimulus_controller('ajax', {'method': 'PATCH'}) }}
+                                        {{ stimulus_action('ajax', 'sendAjax') }}
+                                    href="{{ path('updateLignePosition', {ligne: ligne.id, up: 1}) }}"
+                                ><i class="bi bi-arrow-right"></i></a>
                                 {% endif %}
 
-                                <a class="js-confirm"
-                                   href="{{ path('deleteLigne', {ligne: ligne.id}) }}"
-                                   data-method="DELETE"
+                                <a
+                                    {{ stimulus_controller('ajax', {'method': 'DELETE'}) }}
+                                    {{ stimulus_action('ajax', 'askForConfirmation') }}
+                                    href="{{ path('deleteLigne', {ligne: ligne.id}) }}"
                             ><i class="bi bi-trash"></i></a>
                             {% endif %}
 
@@ -112,22 +126,25 @@
                                             class="bi bi-pencil"></i></a>
 
                                 {% if ligne != categorie.lignes | first %}
-                                    <a class="js-ajax"
-                                       href="{{ path('updateLignePosition', {ligne: ligne.id, up: 0}) }}"
-                                       data-method="PATCH"
+                                <a
+                                        {{ stimulus_controller('ajax', {'method': 'PATCH'}) }}
+                                        {{ stimulus_action('ajax', 'sendAjax') }}
+                                        href="{{ path('updateLignePosition', {ligne: ligne.id, up: 0}) }}"
                                     ><i class="bi bi-arrow-left"></i></a>
                                 {% endif %}
 
                                 {% if ligne != categorie.lignes | last %}
-                                    <a class="js-ajax"
-                                       href="{{ path('updateLignePosition', {ligne: ligne.id, up: 1}) }}"
-                                       data-method="PATCH"
+                                <a
+                                        {{ stimulus_controller('ajax', {'method': 'PATCH'}) }}
+                                        {{ stimulus_action('ajax', 'sendAjax') }}
+                                        href="{{ path('updateLignePosition', {ligne: ligne.id, up: 1}) }}"
                                     ><i class="bi bi-arrow-right"></i></a>
                                 {% endif %}
 
-                                <a class="js-confirm"
-                                   href="{{ path('deleteCompetence', {competence: ligne.id}) }}"
-                                   data-method="DELETE"
+                                <a
+                                    {{ stimulus_controller('ajax', {'method': 'DELETE'}) }}
+                                    {{ stimulus_action('ajax', 'askForConfirmation') }}
+                                    href="{{ path('deleteCompetence', {competence: ligne.id}) }}"
                             ><i class="bi bi-trash"></i></a>
                             {% endif %}
                         </span>

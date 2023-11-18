@@ -13,7 +13,7 @@ class CvController extends AbstractController
     #[Route('/', name: 'cv', methods: ['GET'])]
     public function index(EntityManagerInterface $em): Response
     {
-        $categories = $em->getRepository(Categorie::class)->findAllRootActiveByPosition();
+        $categories = $em->getRepository(Categorie::class)->findAllRootByPosition();
 
         return $this->render('cv/cv.html.twig', [
             'categories' => $categories,

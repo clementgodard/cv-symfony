@@ -35,7 +35,8 @@ Encore
   .addEntry("app", "./assets/app.ts")
   .addEntry("cv", "./assets/js/cv.ts")
   .addEntry("adminBase", "./assets/js/admin/base.ts")
-  .addEntry("liste", "./assets/js/admin/liste.ts")
+
+  .addStyleEntry("liste", "./assets/styles/admin/liste.scss")
 
   // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
   .enableStimulusBridge("./assets/controllers.json")

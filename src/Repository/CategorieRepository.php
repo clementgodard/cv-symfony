@@ -13,13 +13,21 @@ class CategorieRepository extends ServiceEntityRepository
         parent::__construct($registry, Categorie::class);
     }
 
-    public function findAllRootActiveByPosition()
+    /**
+     * @return array<Categorie>|null
+     */
+    public function findAllRootByPosition(bool $showInactive = false): ?array
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.actif = 1')
-            // On ne prend que les catégories mères, car elles contiennent déjà les catégories enfants
-            ->andWhere('c.parent IS NULL')
-            ->orderBy('c.position', 'asc')
-            ->getQuery()->execute();
+        $qb = $this->createQueryBuilder('c');
+
+        if (!$showInactive) {
+            $qb->andWhere('c.actif = 1');
+        }
+
+        // On ne prend que les catégories mères, car elles contiennent déjà les catégories enfants
+        $qb->andWhere('c.parent IS NULL')
+            ->orderBy('c.position', 'asc');
+
+        return $qb->getQuery()->getResult();
     }
 }

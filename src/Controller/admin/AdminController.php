@@ -19,7 +19,7 @@ class AdminController extends AbstractController
     #[Route('/liste', name: 'liste', methods: ['GET'])]
     public function liste(CategorieRepository $categorieRepository): Response
     {
-        $categories = $categorieRepository->findAllRootActiveByPosition();
+        $categories = $categorieRepository->findAllRootByPosition(true);
         $countRootCategories = $categorieRepository->count(['parent' => null]);
 
         return $this->render('admin/liste.html.twig', [
